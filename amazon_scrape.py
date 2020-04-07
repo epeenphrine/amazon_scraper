@@ -8,4 +8,5 @@ import time
 import config
 
 search = config.search
-url = https://www.amazon.com/s?k=rtx+2080&ref=nb_sb_noss_2
+url = f"https://www.amazon.com/s?k={search}&ref=nb_sb_noss_2"
+
