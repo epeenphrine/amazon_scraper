@@ -1,4 +1,7 @@
 
 
 ## search terms using URL. use + for spaces
-search = 'rtx+2080' 
+item = 'rtx 2080'
+split_search = item.split(" ")
+search = item.replace(" ", "+")
+walmart_search = item.replace(" ", "%20")

@@ -1,2 +1,2 @@
 ### amazon scraper
-- test
+- price aggregator for multiple sites
