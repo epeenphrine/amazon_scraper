@@ -5,7 +5,7 @@ import json
 import random
 import os
 import time
-import config 
+from config import search 
 from proxy_rotate import proxy_rotate
 
 """
@@ -15,15 +15,12 @@ goal is to be able to dynamically search amazon and get prices for various items
 
 def amazon_scrape():
     #search and url
-    search = config.search
     url = f"https://www.amazon.com/s?k={search}&ref=nb_sb_noss_2"
 
-    #making requests using urllib
-
+    #pass soup from proxyrotate
     soup = proxy_rotate(url)
 
     ## check html
-    print("22222222222222222222222222222222222222222222222222222222222222222222")
     amazon = {
 
     }
@@ -44,13 +41,13 @@ def amazon_scrape():
             if "$" in text and 'sponsored' not in text and all(word in text for word in config.split_search):
                 items.append(text)
     amazon['items'] = items
+    return amazon
 
+    #print(len(amazon['item_name']))
 
-    print(len(amazon['item_name']))
-
-    print(len(amazon['listing']))
+    #print(len(amazon['listing']))
 
     test()
 
-    print(amazon['items'])
-    print(len(amazon['items']))
+    #print(amazon['items'])
+    #print(len(amazon['items']))

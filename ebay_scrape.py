@@ -24,7 +24,6 @@ def ebay_scrape():
     soup = proxy_rotate(url)
 
     ## check html
-    print("22222222222222222222222222222222222222222222222222222222222222222222")
     amazon = {
 
     }
@@ -47,10 +46,10 @@ def ebay_scrape():
     amazon['items'] = items
 
 
-    print(len(amazon['item_name']))
+    #print(len(amazon['item_name']))
 
-    print(len(amazon['listing']))
+    #print(len(amazon['listing']))
 
     test()
-    print(amazon['items'])
-    print(len(amazon['items']))
+    #print(amazon['items'])
+    #print(len(amazon['items']))

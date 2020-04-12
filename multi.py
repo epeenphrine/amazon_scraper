@@ -1,7 +1,8 @@
 from multiprocessing import Pool, Process
 from amazon_scrape import amazon_scrape
 from ebay_scrape import ebay_scrape
-import time 
+import time
+
 if __name__ == '__main__':
     start_time = time.time()
     p1 = Process(target=amazon_scrape)
@@ -19,7 +20,7 @@ if __name__ == '__main__':
     p3.join()
     p4.join()
     end_time = time.time() - start_time
-    print(end_time)
+    print(f'multi process time {end_time}')
     time.sleep(5)
 
     start_time = time.time()
@@ -28,4 +29,4 @@ if __name__ == '__main__':
     amazon_scrape()
     ebay_scrape() 
     end_time = time.time() - start_time
-    print(end_time)
+    print(f'single process time {end_time}')
