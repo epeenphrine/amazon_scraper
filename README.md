@@ -3,7 +3,8 @@
 - price aggregator for multiple sites
 
 ## install
-- ```pip install -r requirements.txt```
+- ```pip install -r requirements.txt```\
+OR
 - ```pip install pipenv && pipenv install -r requirements.txt```
 
 ## run 
