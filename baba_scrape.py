@@ -1,33 +1,31 @@
-
-
 import urllib.request
 import bs4 as bs
 import json
 import random
 import os
 import time
-import config 
 from proxy_rotate import proxy_rotate
 import re
 import statistics
 
 """
-goal is to be able to dynamically search ebay and get prices for various items using scraping techniques
+goal is to be able to dynamically search baba and get prices for various items using scraping techniques
 """
 
-def ebay_scrape(search):
-    print(f'searching ebay for {search} ')
+
+def baba_scrape(search):
+    print(f'searching baba for {search} ')
     split_search = search.split(" ")
     search = search.replace(" ", "+")
-    base_url = 'https://ebay.com'
+    base_url = 'https://alibaba.com'
 
     #search and url
-    url = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR5.TRC2.A0.H0.X{search}.TRS0&_nkw={search}&_sacat=0"
-            
+    url = f"https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={search}"
+
     #pass soup from proxyrotate
     soup = proxy_rotate(url)
 
-    ebay = {
+    baba = {
 
     }
 
@@ -35,15 +33,16 @@ def ebay_scrape(search):
     prices = []
     numbers = []
     links = []
-    for item in soup.select('.s-item'):
+
+    for item in soup.select('.img-switcher-parent'):
         text = item.get_text(strip=True).lower()
-        if "$" in text and all(word in text for word in split_search):
+        if "$" in text and 'sponsored' not in text and all(word in text for word in split_search):
             # get first match of regular expression
             price = re.search("\$\d\d\d.\d\d|\$\d\d\d\d.\d\d|\$\d\d\.\d\d|\$\d\.\d\d", text)
             if price != None:
                 # bs4 .find match first a tag 
                 a = item.find('a', href=True)
-                link = a['href']
+                link = base_url + a['href']
                 links.append(link)
                 # .group() to convert regex object into string. price != None so that we don't run into error  
                 price = price.group()
@@ -53,21 +52,21 @@ def ebay_scrape(search):
     
     average = ("{:.2f}").format(statistics.mean(numbers))
     
-    ebay['id'] = 1
-    ebay['ecommerce'] = 'ebay'
-    ebay['items'] = items
-    ebay['links'] = links
-    ebay['prices'] = prices
-    ebay['numbers'] = numbers 
-    ebay['average'] = average
+    baba['id'] = 1
+    baba['ecommerce'] = 'baba'
+    baba['items'] = items
+    baba['links'] = links
+    baba['prices'] = prices
+    baba['numbers'] = numbers 
+    baba['average'] = average
 
     ## checck
-    #print(ebay['id'])
-    #print(ebay['ecommerce'])
-    #print(ebay['items'])
-    #print(ebay['prices'])
-    #print(ebay['numbers'])
-    #print(ebay['average'])
+    #print(baba['id'])
+    #print(baba['ecommerce'])
+    #print(baba['items'])
+    #print(baba['prices'])
+    #print(baba['numbers'])
+    #print(baba['average'])
 
-    return ebay
+    return baba
 

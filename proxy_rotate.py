@@ -28,13 +28,13 @@ def proxy_rotate(url):
             try:
                 pick = random.choice(proxies_list)
                 print(f'trying proxy: {pick}')
-                ## configuring urllib for use with proxies
+                # configuring urllib for use with proxies
                 proxy_support = urllib.request.ProxyHandler(pick)
                 opener = urllib.request.build_opener(proxy_support)
                 urllib.request.install_opener(opener)
 
-                ## requests
-                req = urllib.request.Request(url, headers={'User-Agent' : "Magic Browser"})
+                # requests
+                req = urllib.request.Request(url, headers={'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101 Firefox/75.0'})
                 sauce = urllib.request.urlopen(req, timeout=2).read()
                 soup = bs.BeautifulSoup(sauce, 'lxml')
                 end_time = time.time() - start_time
