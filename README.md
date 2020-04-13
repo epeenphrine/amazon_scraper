@@ -1,4 +1,5 @@
-### amazon scraper
+### price hunt 
+- I will be running this script on api request on neetcode.com 
 - price aggregator for multiple sites
 
 ## install
