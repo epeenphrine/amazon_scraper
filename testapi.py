@@ -7,7 +7,7 @@ import requests
     #"owner": None
 #}
 
-url= "http://localhost:8000/api/scrape"
+url= "http://neetcode.com/api/scrape"
 
 headers = {
     'content-type': 'application/json'
@@ -16,11 +16,9 @@ headers = {
 data = {
     'search': 'this is my data'
 }
-url2 = 'http://localhost:8000/api/data/'
+url2 = 'http://neetcode.com/api/data/'
 
 res = requests.post(url, data)
-res2 = requests.get(url2)
 print(res.content)
-print(res2.content)
 
 

@@ -22,8 +22,8 @@ def ebay_scrape(search):
     base_url = 'https://ebay.com'
 
     #search and url
-    url = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR5.TRC2.A0.H0.X{search}.TRS0&_nkw={search}&_sacat=0"
-            
+    #url = f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR5.TRC2.A0.H0.X{search}.TRS0&_nkw={search}&_sacat=0"
+    url =  f"https://www.ebay.com/sch/i.html?_from=R40&_nkw={search}0&_sacat=0&rt=nc&LH_BIN=1" 
     #pass soup from proxyrotate
     soup = proxy_rotate(url)
 
@@ -39,8 +39,9 @@ def ebay_scrape(search):
         text = item.get_text(strip=True).lower()
         if "$" in text and all(word in text for word in split_search):
             # get first match of regular expression
-            price = re.search("\$\d\d\d.\d\d|\$\d\d\d\d.\d\d|\$\d\d\.\d\d|\$\d\.\d\d", text)
-            if price != None:
+            price = re.search("\$\d\d\d.\d\d|\$\d\d\d\d.\d\d|\$\d,\d\d\d.\d\d|\$\d\d\.\d\d|\$\d\.\d\d", text)
+            no_price = re.search('$0.00',text)
+            if price != None and no_price == None:
                 # bs4 .find match first a tag 
                 a = item.find('a', href=True)
                 link = a['href']
@@ -49,11 +50,11 @@ def ebay_scrape(search):
                 price = price.group()
                 items.append(text)
                 prices.append(price)
-                numbers.append(float(price.replace('$', '')))
+                numbers.append(float(price.replace('$', '').replace(',', '')))
     
     average = ("{:.2f}").format(statistics.mean(numbers))
     
-    ebay['id'] = 1
+    ebay['id'] = 3
     ebay['ecommerce'] = 'ebay'
     ebay['items'] = items
     ebay['links'] = links

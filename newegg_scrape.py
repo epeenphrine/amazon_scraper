@@ -10,23 +10,23 @@ import re
 import statistics
 
 """
-goal is to be able to dynamically search amazon and get prices for various items using scraping techniques
+goal is to be able to dynamically search newegg and get prices for various items using scraping techniques
 """
 
 
-def amazon_scrape(search):
-    print(f'searching amazon for {search} ')
+def newegg_scrape(search):
+    print(f'searching newegg for {search} ')
     split_search = search.split(" ")
     search = search.replace(" ", "+")
-    base_url = 'https://amazon.com'
+    base_url = 'https://newegg.com'
 
     #search and url
-    url = f"https://www.amazon.com/s?k={search}&ref=nb_sb_noss_2"
+    url = f"https://www.newegg.com/p/pl?d={search}"
 
     #pass soup from proxyrotate
     soup = proxy_rotate(url)
 
-    amazon = {
+    newegg = {
 
     }
 
@@ -34,7 +34,7 @@ def amazon_scrape(search):
     prices = []
     numbers = []
     links = []
-    for item in soup.findAll('div',{'class':'sg-col-inner'}):
+    for item in soup.findAll('div',{'class':'item-container'}):
         text = item.get_text(strip=True).lower()
         if "$" in text:
             # get first match of regular expression
@@ -53,20 +53,20 @@ def amazon_scrape(search):
     
     average = ("{:.2f}").format(statistics.mean(numbers))
     
-    amazon['id'] = 1
-    amazon['ecommerce'] = 'amazon'
-    amazon['items'] = items
-    amazon['links'] = links
-    amazon['prices'] = prices
-    amazon['numbers'] = numbers 
-    amazon['average'] = average
+    newegg['id'] = 4
+    newegg['ecommerce'] = 'newegg'
+    newegg['items'] = items
+    newegg['links'] = links
+    newegg['prices'] = prices
+    newegg['numbers'] = numbers 
+    newegg['average'] = average
 
     ## checck
-    #print(amazon['id'])
-    #print(amazon['ecommerce'])
-    #print(amazon['items'])
-    #print(amazon['prices'])
-    #print(amazon['numbers'])
-    #print(amazon['average'])
+    #print(newegg['id'])
+    #print(newegg['ecommerce'])
+    #print(newegg['items'])
+    #print(newegg['prices'])
+    #print(newegg['numbers'])
+    #print(newegg['average'])
 
-    return amazon
+    return newegg
