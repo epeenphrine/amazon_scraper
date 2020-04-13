@@ -41,26 +41,18 @@ def walmart_scrape(search):
     print(type(json_data))
 
     for item in json_data['searchContent']['preso']['items']:
+        print(item.keys())
         print(item['primaryOffer']['offerPrice'])
         break
     
-    #for item in soup.select('.u-size-1-5-xl'):
-    for item in soup.select('Grid'):
-        text = item.get_text(strip=True).lower()
-        print(text)
-        if "$" in text and 'sponsored' not in text and all(word in text for word in split_search):
-            # get first match of regular expression
-            price = re.search("\$\d\d\d.\d\d|\$\d,\d\d\d.\d\d|\$\d\d\d\d.\d\d|\$\d\d\.\d\d|\$\d\.\d\d", text)
-            if price != None:
-                # bs4 .find match first a tag 
-                a = item.find('a', href=True)
-                link = base_url + a['href']
-                links.append(link)
+   
+    link = base_url + a['href']
+    links.append(link)
                 # .group() to convert regex object into string. price != None so that we don't run into error  
-                price = price.group()
-                items.append(text)
-                prices.append(price)
-                numbers.append(float(price.replace('$', '')))
+    price = price.group()
+    items.append(text)
+    prices.append(price)
+    numbers.append(float(price.replace('$', '')))
     
     average = ("{:.2f}").format(statistics.mean(numbers))
     
