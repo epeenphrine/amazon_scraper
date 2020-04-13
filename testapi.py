@@ -16,9 +16,11 @@ headers = {
 data = {
     'search': 'this is my data'
 }
+url2 = 'http://localhost:8000/api/data/'
 
 res = requests.post(url, data)
-
+res2 = requests.get(url2)
 print(res.content)
+print(res2.content)
 
 

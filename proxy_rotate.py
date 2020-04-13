@@ -22,11 +22,12 @@ def proxy_rotate(url):
         proxies_list = json_load()
 
     if proxies_list and len(proxies_list) >= 50: ## check if proxies_list is empty or not
+        start_time = time.time()
         for i in range(0, len(proxies_list)):
-            start_time = time.time()
+            start_time1 = time.time()
             try:
                 pick = random.choice(proxies_list)
-
+                print(f'trying proxy: {pick}')
                 ## configuring urllib for use with proxies
                 proxy_support = urllib.request.ProxyHandler(pick)
                 opener = urllib.request.build_opener(proxy_support)
@@ -37,8 +38,9 @@ def proxy_rotate(url):
                 sauce = urllib.request.urlopen(req, timeout=2).read()
                 soup = bs.BeautifulSoup(sauce, 'lxml')
                 end_time = time.time() - start_time
+                end_time1 = time.time() - start_time1
                 print(f'soup retrieved at {end_time}')
-                if end_time >= 5.00:
+                if end_time1 >= 5.00:
                     print(f'{pick} took too long\nremoving {pick}')
                     proxies_list.remove(pick)
                     with open('proxydictlist.json', 'w') as f:
